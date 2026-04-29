@@ -1,9 +1,6 @@
 name: Bluepad32 Libs Build
 
 on:
-  push:
-    branches:
-      - bluepad32
   workflow_dispatch:
 
 concurrency:
