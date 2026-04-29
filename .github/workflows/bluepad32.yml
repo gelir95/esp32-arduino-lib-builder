@@ -26,6 +26,8 @@ jobs:
         run: bash ./tools/prepare-ci.sh
 
       - name: Build Libs for ${{ matrix.target }}
+        env:
+          AR_USER: espressif
         run: bash ./build.sh -e -t ${{ matrix.target }}
 
       - name: Upload build (on failure)

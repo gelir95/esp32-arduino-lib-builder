@@ -1,5 +1,5 @@
 {
-  "name": "framework-arduinoespressif32bluepad32",
+  "name": "framework-arduinoespressif32",
   "version": "4.2.0.3.1.0",
   "description": "Arduino Wiring-based Framework for the Espressif ESP32, ESP32-H, ESP32-S and ESP32-C series of SoCs with Bluepad32",
   "keywords": [
