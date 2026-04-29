@@ -42,3 +42,58 @@ To use it, follow these steps:
 ### Documentation
 
 For more information about how to use the Library builder, please refer to this [Documentation page](https://docs.espressif.com/projects/arduino-esp32/en/latest/lib_builder.html?highlight=lib%20builder)
+
+---
+
+## Bluepad32 Branch
+
+The `bluepad32` branch of this fork builds a custom Arduino-ESP32 framework with **Bluepad32 v4.2.0** on **ESP-IDF release/v5.4**, solving the ESP-NOW coexistence issue present in Core 2.x.
+
+### Prerequisites
+
+WSL2 with Ubuntu 22.04:
+
+```bash
+sudo apt install python3-venv python3-dev python3-pip \
+  git wget curl libssl-dev libncurses-dev flex bison gperf \
+  cmake ninja-build ccache jq
+```
+
+### Build
+
+```bash
+git clone -b bluepad32 https://github.com/gelir95/esp32-arduino-lib-builder.git
+cd esp32-arduino-lib-builder
+
+# Install ESP-IDF tools (one-time, ~500 MB)
+bash ./esp-idf/install.sh
+source ./esp-idf/export.sh
+
+# Build framework (~40–90 min depending on CPU)
+AR_USER=espressif bash ./build.sh -s -e -t esp32
+```
+
+### Create release packages
+
+```bash
+# Board zip (framework-arduinoespressif32)
+bash ./tools/package-bluepad32.sh
+# → dist/esp32-bluepad32-<version>.zip
+
+# Libs zip (framework-arduinoespressif32-libs)
+cd out/tools/esp32-arduino-libs && zip -r ~/bluepad32-libs.zip . && cd -
+```
+
+Upload both zips as a GitHub release, then reference them in your project.
+
+### PlatformIO integration
+
+```ini
+[env:myboard]
+platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.37/platform-espressif32.zip
+board = esp32dev
+framework = arduino
+platform_packages =
+    framework-arduinoespressif32@https://github.com/gelir95/esp32-arduino-lib-builder/releases/download/<tag>/esp32-bluepad32-<version>.zip
+    framework-arduinoespressif32-libs@https://github.com/gelir95/esp32-arduino-lib-builder/releases/download/<tag>/bluepad32-libs.zip
+```
