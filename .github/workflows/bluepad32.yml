@@ -32,7 +32,7 @@ jobs:
 
       - name: Build Libs for ${{ matrix.target }}
         env:
-          GITHUB_REPOSITORY_OWNER: espressif
+          AR_USER: espressif
           GITHUB_TOKEN: ${{ github.token }}
         run: bash ./build.sh -e -t ${{ matrix.target }}
 

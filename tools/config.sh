@@ -25,7 +25,12 @@ if [ -z $IDF_TARGET ]; then
 fi
 
 # Owner of the target ESP32 Arduino repository
-AR_USER="${GITHUB_REPOSITORY_OWNER:-espressif}"
+# Allow AR_USER to be pre-set (e.g. in CI) before sourcing this file.
+# GITHUB_REPOSITORY_OWNER is a protected GitHub Actions variable that always
+# reflects the repo owner and cannot be overridden via env: in a workflow step.
+if [ -z "$AR_USER" ]; then
+    AR_USER="${GITHUB_REPOSITORY_OWNER:-espressif}"
+fi
 
 # The full name of the repository
 AR_REPO="$AR_USER/arduino-esp32"
